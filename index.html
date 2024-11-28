@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced AI ROI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+            font-style: italic;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            background: #e7f3fe;
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid #007BFF;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced AI ROI Calculator</h1>
+        <p>Provide the required inputs for calculating the ROI of your brand marketing or agency by using Gimmefy.</p>
+
+        <label for="teamMembers">Total Team Members who are fully or partly engaged in content creation:</label>
+        <input type="number" id="teamMembers" placeholder="Enter the number of team members">
+
+        <label for="fteCount">Number of FTE:</label>
+        <input type="number" id="fteCount" placeholder="Enter number of full-time employees">
+
+        <label for="fteWage">Average Monthly Wage of FTE (USD):</label>
+        <input type="number" id="fteWage" placeholder="Enter average monthly wage">
+
+        <label for="partTimeCount">Number of Part-Time Employees:</label>
+        <input type="number" id="partTimeCount" placeholder="Enter part-time employee count">
+
+        <label for="partTimeWage">Average Monthly Wage of Part-Time Employees (USD):</label>
+        <input type="number" id="partTimeWage" placeholder="Enter average monthly wage">
+
+        <label for="teamHours">Total Hours Spent by the Team (Monthly):</label>
+        <input type="number" id="teamHours" placeholder="Enter total hours spent monthly">
+
+        <label for="usesSpecialists">Does Your Agency Use Specialists? (Yes/No):</label>
+        <select id="usesSpecialists">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="expertFields">In Which Fields Do You Deploy Experts? (e.g., SEO, PR, CRM, Strategy):</label>
+        <input type="text" id="expertFields" placeholder="Enter fields separated by commas">
+
+        <label for="marketingSpendAgency">Marketing Spend Paid to Agency (optional, USD):</label>
+        <input type="number" id="marketingSpendAgency" placeholder="Enter marketing spend paid to agency">
+
+        <label for="speedImportance">Importance of Speed to Your Agency:</label>
+        <select id="speedImportance">
+            <option value="Not at all">Not at all</option>
+            <option value="Important">Important</option>
+            <option value="Everything">It's everything</option>
+        </select>
+
+        <label for="specialistHours">Monthly Hours Deployed by Specialists:</label>
+        <input type="number" id="specialistHours" placeholder="Enter hours">
+
+        <label for="specialistCost">Cost Per Hour for Specialists (USD):</label>
+        <input type="number" id="specialistCost" placeholder="Enter cost per hour">
+
+        <label for="marketingBudget">Total Marketing Budget (USD):</label>
+        <input type="number" id="marketingBudget" placeholder="Enter total marketing budget">
+
+        <button onclick="calculateROI()">Calculate ROI</button>
+
+        <div id="results" class="output" style="display:none;">
+            <h3>Results:</h3>
+            <p><strong>Cost Savings:</strong> You can save $<span id="costSavings"></span> per annum (<span id="costSavingsPercentage"></span>% saved).</p>
+            <p><strong>Time Savings:</strong> You will save <span id="timeSaved"></span> hours of your internal team in the next year - utilizing that for other initiatives, you could potentially create value up to $<span id="valueOfTimeSaved"></span>.</p>
+            <p><strong>Speed and GTM Benefit:</strong> Being able to launch faster can be invaluable in certain situations. Some experts believe it can be worth as much as $<span id="gtmAdvantage"></span>*.</p>
+            <p><strong>Expert Resource Cost Savings:</strong> Working with experts in various fields can be expensive, time-consuming, and require coordination. Based on your inputs, we believe that you can save $<span id="expertSavings"></span> per annum.</p>
+            <p><strong>Overall ROI:</strong> Based on your size and usage, you can save $<span id="overallSavings"></span> per annum and create additional value of $<span id="additionalValue"></span>, with an ROI of <span id="roi"></span>%.</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateROI() {
+            const fteCount = parseFloat(document.getElementById('fteCount').value) || 0;
+            const fteWage = parseFloat(document.getElementById('fteWage').value) || 0;
+            const partTimeCount = parseFloat(document.getElementById('partTimeCount').value) || 0;
+            const partTimeWage = parseFloat(document.getElementById('partTimeWage').value) || 0;
+            const teamHours = parseFloat(document.getElementById('teamHours').value) || 0;
+            const specialistHours = parseFloat(document.getElementById('specialistHours').value) || 0;
+            const specialistCost = parseFloat(document.getElementById('specialistCost').value) || 0;
+            const marketingBudget = parseFloat(document.getElementById('marketingBudget').value) || 0;
+            const speedImportance = document.getElementById('speedImportance').value;
+
+            const costSavings = ((fteCount * fteWage * 12) + (partTimeCount * partTimeWage * 12)) * 0.7;
+            const totalCosts = (fteCount * fteWage * 12) + (partTimeCount * partTimeWage * 12);
+            const costSavingsPercentage = (costSavings / totalCosts) * 100;
+
+            const timeSaved = (teamHours * 12) * 0.7;
+            const valueOfTimeSaved = timeSaved * (fteWage / 160);
+
+            let speedFactor;
+            if (speedImportance === "Not at all") speedFactor = 0.1;
+            else if (speedImportance === "Important") speedFactor = 0.25;
+            else speedFactor = 0.3;
+            const gtmAdvantage = marketingBudget * speedFactor;
+
+            const expertCost = specialistHours * specialistCost * 12;
+            const expertSavings = expertCost * 0.6;
+
+            const overallSavings = costSavings + valueOfTimeSaved + expertSavings;
+            const additionalValue = gtmAdvantage;
+            const roi = ((overallSavings + additionalValue) / marketingBudget) * 100;
+
+            document.getElementById('costSavings').textContent = costSavings.toFixed(2);
+            document.getElementById('costSavingsPercentage').textContent = costSavingsPercentage.toFixed(2);
+            document.getElementById('timeSaved').textContent = timeSaved.toFixed(2);
+            document.getElementById('valueOfTimeSaved').textContent = valueOfTimeSaved.toFixed(2);
+            document.getElementById('gtmAdvantage').textContent = gtmAdvantage.toFixed(2);
+            document.getElementById('expertSavings').textContent = expertSavings.toFixed(2);
+            document.getElementById('overallSavings').textContent = overallSavings.toFixed(2);
+            document.getElementById('additionalValue').textContent = additionalValue.toFixed(2);
+            document.getElementById('roi').textContent = roi.toFixed(2);
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
